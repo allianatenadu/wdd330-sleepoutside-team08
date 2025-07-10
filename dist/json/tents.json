@@ -26,7 +26,7 @@
     "Id": "985RF",
     "NameWithoutBrand": "Talus Tent - 4-Person, 3-Season",
     "Name": "The North Face Talus Tent - 4-Person, 3-Season",
-    "Image": "../images/tents/the-north-face-talus-tent-4-person-3-season-in-golden-oak-saffron-yellow~p~985rf_01~320.jpg",
+    "Image": "../images/tents/the-north-face-talus-tent-4-person-3-season-in-golden-oak-saffron-yellow~p~989cg_01~320.jpg",
 
     "SizesAvailable": {},
     "Colors": [
@@ -44,6 +44,7 @@
     "ListPrice": 199.99,
     "FinalPrice": 199.99
   },
+
   {
     "Id": "989CG",
     "NameWithoutBrand": "Talus Tent - 3-Person, 3-Season",
@@ -66,6 +67,7 @@
     "ListPrice": 179.99,
     "FinalPrice": 179.99
   },
+
   {
     "Id": "985PR",
     "NameWithoutBrand": "Alpine Guide Tent - 3-Person, 4-Season",

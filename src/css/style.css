@@ -241,6 +241,9 @@ button {
   grid-column: 3;
 }
 
+/* Discount Price Styling */
+
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
