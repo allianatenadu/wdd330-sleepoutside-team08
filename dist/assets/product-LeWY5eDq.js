@@ -1,1 +1,54 @@
-import{g as d,s as a,a as s}from"./utils-B4K_OIKz.js";function n(r){if(r.ok)return r.json();throw new Error("Bad Response")}class u{constructor(t){this.category=t,this.path=`/json/${this.category}.json`}getData(){return fetch(this.path).then(n).then(t=>t)}async findProductById(t){return(await this.getData()).find(c=>c.Id===t)}}class i{constructor(t,o){this.productId=t,this.product={},this.dataSource=o}async init(){this.product=await this.dataSource.findProductById(this.productId),this.renderProductDetails(),document.getElementById("addToCart").addEventListener("click",this.addProductToCart.bind(this))}addProductToCart(t){let o=d("so-cart")||[];o.push(this.product),a("so-cart",o)}renderProductDetails(){document.querySelector("h2").textContent=this.product.Brand.Name,document.querySelector("h3").textContent=this.product.NameWithoutBrand;const t=document.getElementById("productImage");t.src=this.product.Image,t.alt=this.product.NameWithoutBrand,document.querySelector("#productPrice").textContent=this.product.FinalPrice,document.querySelector("#productColor").textContent=this.product.Colors[0].ColorName,document.querySelector("#productDesc").innerHTML=this.product.DescriptionHtmlSimple,document.querySelector("#addToCart").dataset.id=this.product.Id}}const h=new u("tents"),e=s("product"),p=new i(e,h);console.log("product ID from URL:",e);p.init();
+import { g as d, s as a, a as s } from "./utils-B4K_OIKz.js";
+function n(r) {
+  if (r.ok) return r.json();
+  throw new Error("Bad Response");
+}
+class u {
+  constructor(t) {
+    (this.category = t), (this.path = `/json/${this.category}.json`);
+  }
+  getData() {
+    return fetch(this.path)
+      .then(n)
+      .then((t) => t);
+  }
+  async findProductById(t) {
+    return (await this.getData()).find((c) => c.Id === t);
+  }
+}
+class i {
+  constructor(t, o) {
+    (this.productId = t), (this.product = {}), (this.dataSource = o);
+  }
+  async init() {
+    (this.product = await this.dataSource.findProductById(this.productId)),
+      this.renderProductDetails(),
+      document
+        .getElementById("addToCart")
+        .addEventListener("click", this.addProductToCart.bind(this));
+  }
+  addProductToCart(t) {
+    let o = d("so-cart") || [];
+    o.push(this.product), a("so-cart", o);
+  }
+  renderProductDetails() {
+    (document.querySelector("h2").textContent = this.product.Brand.Name),
+      (document.querySelector("h3").textContent =
+        this.product.NameWithoutBrand);
+    const t = document.getElementById("productImage");
+    (t.src = this.product.Image),
+      (t.alt = this.product.NameWithoutBrand),
+      (document.querySelector("#productPrice").textContent =
+        this.product.FinalPrice),
+      (document.querySelector("#productColor").textContent =
+        this.product.Colors[0].ColorName),
+      (document.querySelector("#productDesc").innerHTML =
+        this.product.DescriptionHtmlSimple),
+      (document.querySelector("#addToCart").dataset.id = this.product.Id);
+  }
+}
+const h = new u("tents"),
+  e = s("product"),
+  p = new i(e, h);
+console.log("product ID from URL:", e);
+p.init();
