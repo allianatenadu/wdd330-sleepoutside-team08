@@ -1,4 +1,6 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, getDiscountInfo } from "./utils.mjs";
+
+
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -9,7 +11,7 @@ export default class ProductDetails {
 
   async init () {
     this.product = await this.dataSource.findProductById(this.productId);
-    console.log("Product ID:", this.productId);
+    // console.log("Product ID:", this.productId);
 
     this.renderProductDetails();
 
@@ -25,11 +27,15 @@ export default class ProductDetails {
 
   renderProductDetails() {
 
+    const { isDiscounted, discountPercent } = getDiscountInfo(this.product);
+
+
     if (!this.product || !this.product.Brand || !this.product.Brand.Name) {
-      console.error("Product or Brand data is missing:", this.product);
+      
       return;
     }
 
+    
 
     document.querySelector('h2').textContent = this.product.Brand.Name;
     document.querySelector('h3').textContent = this.product.NameWithoutBrand;
@@ -38,7 +44,21 @@ export default class ProductDetails {
     productImage.src = this.product.Image;
     productImage.alt = this.product.NameWithoutBrand;
 
-    document.querySelector('#productPrice').textContent = this.product.FinalPrice;
+    
+
+    // document.querySelector('#productPrice').textContent = this.product.FinalPrice;
+    const priceElement = document.querySelector('#productPrice');
+
+    if (isDiscounted) {
+      priceElement.innerHTML = `
+        <span class="final-price">$${this.product.FinalPrice.toFixed(2)}</span>
+        <span class="original-price">$${this.product.SuggestedRetailPrice.toFixed(2)}</span>
+      `;
+    } else {
+      priceElement.textContent = `$${this.product.FinalPrice.toFixed(2)}`;
+    }
+
+    
     document.querySelector('#productColor').textContent = this.product.Colors[0].ColorName;
     document.querySelector('#productDesc').innerHTML = this.product.DescriptionHtmlSimple;
 
