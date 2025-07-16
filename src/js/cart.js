@@ -15,7 +15,7 @@ function renderCartContents() {
 
   renderCartTotal(cartItems);
   attachQuantityListeners(); //  Attach quantity change listeners
-  attachRemoveListeners();   //  Attach remove button functionality
+  attachRemoveListeners(); //  Attach remove button functionality
 }
 
 //  Step 2: Add quantity input field and remove button in the template
@@ -48,12 +48,11 @@ function cartItemTemplate(item) {
   </li>`;
 }
 
-
 //  Step 3: Recalculate totals based on Quantity
 function calculateCartTotal(cartItems) {
   const total = cartItems.reduce(
     (sum, item) => sum + item.FinalPrice * (item.Quantity || 1),
-    0
+    0,
   );
   return total.toFixed(2);
 }
@@ -80,7 +79,7 @@ function renderCartTotal(cartItems) {
 
 //  Step 4: Attach event listeners to quantity inputs
 function attachQuantityListeners() {
-  document.querySelectorAll(".quantity-input").forEach(input => {
+  document.querySelectorAll(".quantity-input").forEach((input) => {
     input.addEventListener("change", (event) => {
       const newQty = parseInt(event.target.value);
       const id = event.target.dataset.id;
@@ -91,7 +90,7 @@ function attachQuantityListeners() {
       }
 
       let cart = getLocalStorage("so-cart") || [];
-      const itemIndex = cart.findIndex(item => item.Id === id);
+      const itemIndex = cart.findIndex((item) => item.Id === id);
 
       if (itemIndex > -1) {
         // Update quantity
@@ -117,12 +116,12 @@ function attachQuantityListeners() {
 
 //  Step 5: (Optional but recommended) Remove item button logic
 function attachRemoveListeners() {
-  document.querySelectorAll(".remove-item").forEach(button => {
+  document.querySelectorAll(".remove-item").forEach((button) => {
     button.addEventListener("click", (event) => {
       const id = event.target.dataset.id;
 
       let cart = getLocalStorage("so-cart") || [];
-      cart = cart.filter(item => item.Id !== id);
+      cart = cart.filter((item) => item.Id !== id);
 
       setLocalStorage("so-cart", cart);
       renderCartContents(); //  Refresh cart
