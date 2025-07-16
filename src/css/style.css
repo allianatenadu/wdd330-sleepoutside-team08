@@ -131,6 +131,13 @@ button {
   fill: gray;
 }
 
+.cart-card__subtotal {
+  font-weight: bold;
+  margin-top: 0.5rem;
+  text-align: right;
+  color: #444;
+}
+
 /* End cart icon styles */
 
 .mission {
