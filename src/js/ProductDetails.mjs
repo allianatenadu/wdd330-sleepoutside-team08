@@ -7,34 +7,65 @@ export default class ProductDetails {
     this.dataSource = dataSource;
   }
 
-  async init () {
+  async init() {
     this.product = await this.dataSource.findProductById(this.productId);
+
+    if (!this.product) {
+      document.querySelector("main").innerHTML = `
+        <h2 style="text-align:center; padding:2rem;">Product not found.</h2>`;
+      return;
+    }
 
     this.renderProductDetails();
 
-    document.getElementById('addToCart')
-      .addEventListener('click', this.addProductToCart.bind(this));
+    const addToCartBtn = document.getElementById("addToCart");
+    if (addToCartBtn) {
+      addToCartBtn.addEventListener("click", this.addProductToCart.bind(this));
+    }
   }
 
-  addProductToCart(product) {
+  addProductToCart() {
     let cart = getLocalStorage("so-cart") || [];
     cart.push(this.product);
     setLocalStorage("so-cart", cart);
   }
 
   renderProductDetails() {
-    document.querySelector('h2').textContent = this.product.Brand.Name;
-    document.querySelector('h3').textContent = this.product.NameWithoutBrand;
+    const brandEl = document.getElementById("productBrand");
+    if (brandEl) {
+      brandEl.textContent = this.product.Brand?.Name || "Brand Not Found";
+    }
 
-    const productImage = document.getElementById('productImage');
-    productImage.src = this.product.Image;
-    productImage.alt = this.product.NameWithoutBrand;
+    const nameEl = document.getElementById("productName");
+    if (nameEl) {
+      nameEl.textContent = this.product.NameWithoutBrand || this.product.Name || "Product Name";
+    }
 
-    document.querySelector('#productPrice').textContent = this.product.FinalPrice;
-    document.querySelector('#productColor').textContent = this.product.Colors[0].ColorName;
-    document.querySelector('#productDesc').innerHTML = this.product.DescriptionHtmlSimple;
+    const imageEl = document.getElementById("productImage");
+    if (imageEl) {
+      imageEl.src = this.product.Image || "../images/default.jpg";
+      imageEl.alt = this.product.NameWithoutBrand || this.product.Name;
+    }
 
-    document.querySelector('#addToCart').dataset.id = this.product.Id;
+    const priceEl = document.querySelector("#productPrice");
+    if (priceEl) {
+      const price = parseFloat(this.product.FinalPrice) || 0;
+      priceEl.textContent = `$${price.toFixed(2)}`;
+    }
+
+    const colorEl = document.querySelector("#productColor");
+    if (colorEl) {
+      colorEl.textContent = this.product.Colors?.[0]?.ColorName || "Unknown";
+    }
+
+    const descEl = document.querySelector("#productDesc");
+    if (descEl) {
+      descEl.innerHTML = this.product.DescriptionHtmlSimple || "No description available.";
+    }
+
+    const addToCartBtn = document.getElementById("addToCart");
+    if (addToCartBtn) {
+      addToCartBtn.dataset.id = this.product.Id;
+    }
   }
-  
 }
