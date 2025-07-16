@@ -14,7 +14,6 @@ function renderCartContents() {
   renderCartTotal(cartItems);
 }
 
-
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
@@ -38,7 +37,7 @@ function cartItemTemplate(item) {
 function calculateCartTotal(cartItems) {
   const total = cartItems.reduce(
     (sum, item) => sum + item.FinalPrice * (item.Quantity || 1),
-    0
+    0,
   );
   return total.toFixed(2);
 }
@@ -54,6 +53,5 @@ function renderCartTotal(cartItems) {
     .querySelector(".products")
     .insertAdjacentHTML("beforeend", summaryHTML);
 }
-
 
 renderCartContents();

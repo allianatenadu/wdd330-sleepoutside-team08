@@ -241,6 +241,37 @@ button {
   grid-column: 3;
 }
 
+/* Make product images responsive */
+.product-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .product-detail {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 2rem;
+  }
+
+  .product-image {
+    max-width: 400px;
+    flex: 1;
+  }
+
+  .product__description,
+  .product-card__price {
+    flex: 2;
+    max-width: 600px;
+  }
+}
+
 /* Discount Price Styling */
 
 @media screen and (min-width: 500px) {
