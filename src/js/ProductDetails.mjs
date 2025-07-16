@@ -9,6 +9,7 @@ export default class ProductDetails {
 
   async init () {
     this.product = await this.dataSource.findProductById(this.productId);
+    console.log("Product ID:", this.productId);
 
     this.renderProductDetails();
 
@@ -23,6 +24,13 @@ export default class ProductDetails {
   }
 
   renderProductDetails() {
+
+    if (!this.product || !this.product.Brand || !this.product.Brand.Name) {
+      console.error("Product or Brand data is missing:", this.product);
+      return;
+    }
+
+
     document.querySelector('h2').textContent = this.product.Brand.Name;
     document.querySelector('h3').textContent = this.product.NameWithoutBrand;
 
