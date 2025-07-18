@@ -1,2 +1,89 @@
-import{g as s,s as u,a as l}from"./utils-C1QgyJlO.js";function p(n){if(n.ok)return n.json();throw new Error(`Fetch failed: ${n.status} ${n.statusText}`)}class h{constructor(t){this.category=t,this.path=`../json/${this.category}.json`}getData(){return fetch(this.path).then(p).then(t=>t)}async findProductById(t){const e=(await this.getData()).find(d=>d.Id===t);return e||console.warn(`Product with ID "${t}" not found in ${this.category}.json`),e}}class m{constructor(t,o){this.productId=t,this.product={},this.dataSource=o}async init(){if(this.product=await this.dataSource.findProductById(this.productId),!this.product){document.querySelector("main").innerHTML=`
-        <h2 style="text-align:center; padding:2rem;">Product not found.</h2>`;return}this.renderProductDetails();const t=document.getElementById("addToCart");t&&t.addEventListener("click",this.addProductToCart.bind(this))}addProductToCart(){let t=s("so-cart")||[];const o=t.findIndex(e=>e.Id===this.product.Id);o>-1?t[o].Quantity=(t[o].Quantity||1)+1:(this.product.Quantity=1,t.push(this.product)),u("so-cart",t)}renderProductDetails(){const t=document.getElementById("productBrand");t&&(t.textContent=this.product.Brand?.Name||"Brand Not Found");const o=document.getElementById("productName");o&&(o.textContent=this.product.NameWithoutBrand||this.product.Name||"Product Name");const e=document.getElementById("productImage");e&&(e.src=this.product.Image||"../images/default.jpg",e.alt=this.product.NameWithoutBrand||this.product.Name);const d=document.querySelector("#productPrice");if(d){const i=parseFloat(this.product.FinalPrice)||0;d.textContent=`$${i.toFixed(2)}`}const r=document.querySelector("#productColor");r&&(r.textContent=this.product.Colors?.[0]?.ColorName||"Unknown");const c=document.querySelector("#productDesc");c&&(c.innerHTML=this.product.DescriptionHtmlSimple||"No description available.");const a=document.getElementById("addToCart");a&&(a.dataset.id=this.product.Id)}}document.addEventListener("DOMContentLoaded",()=>{const n=l("product"),t=new h("tents"),o=new m(n,t),e=document.createElement("p");e.textContent="⏳ Loading product...",e.style.textAlign="center",document.querySelector("main").appendChild(e),n&&o.init().then(()=>{e.remove()})});
+import { g as s, s as u, a as l } from "./utils-C1QgyJlO.js";
+function p(n) {
+  if (n.ok) return n.json();
+  throw new Error(`Fetch failed: ${n.status} ${n.statusText}`);
+}
+class h {
+  constructor(t) {
+    (this.category = t), (this.path = `../json/${this.category}.json`);
+  }
+  getData() {
+    return fetch(this.path)
+      .then(p)
+      .then((t) => t);
+  }
+  async findProductById(t) {
+    const e = (await this.getData()).find((d) => d.Id === t);
+    return (
+      e ||
+        console.warn(
+          `Product with ID "${t}" not found in ${this.category}.json`,
+        ),
+      e
+    );
+  }
+}
+class m {
+  constructor(t, o) {
+    (this.productId = t), (this.product = {}), (this.dataSource = o);
+  }
+  async init() {
+    if (
+      ((this.product = await this.dataSource.findProductById(this.productId)),
+      !this.product)
+    ) {
+      document.querySelector("main").innerHTML = `
+        <h2 style="text-align:center; padding:2rem;">Product not found.</h2>`;
+      return;
+    }
+    this.renderProductDetails();
+    const t = document.getElementById("addToCart");
+    t && t.addEventListener("click", this.addProductToCart.bind(this));
+  }
+  addProductToCart() {
+    let t = s("so-cart") || [];
+    const o = t.findIndex((e) => e.Id === this.product.Id);
+    o > -1
+      ? (t[o].Quantity = (t[o].Quantity || 1) + 1)
+      : ((this.product.Quantity = 1), t.push(this.product)),
+      u("so-cart", t);
+  }
+  renderProductDetails() {
+    const t = document.getElementById("productBrand");
+    t && (t.textContent = this.product.Brand?.Name || "Brand Not Found");
+    const o = document.getElementById("productName");
+    o &&
+      (o.textContent =
+        this.product.NameWithoutBrand || this.product.Name || "Product Name");
+    const e = document.getElementById("productImage");
+    e &&
+      ((e.src = this.product.Image || "../images/default.jpg"),
+      (e.alt = this.product.NameWithoutBrand || this.product.Name));
+    const d = document.querySelector("#productPrice");
+    if (d) {
+      const i = parseFloat(this.product.FinalPrice) || 0;
+      d.textContent = `$${i.toFixed(2)}`;
+    }
+    const r = document.querySelector("#productColor");
+    r && (r.textContent = this.product.Colors?.[0]?.ColorName || "Unknown");
+    const c = document.querySelector("#productDesc");
+    c &&
+      (c.innerHTML =
+        this.product.DescriptionHtmlSimple || "No description available.");
+    const a = document.getElementById("addToCart");
+    a && (a.dataset.id = this.product.Id);
+  }
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const n = l("product"),
+    t = new h("tents"),
+    o = new m(n, t),
+    e = document.createElement("p");
+  (e.textContent = "⏳ Loading product..."),
+    (e.style.textAlign = "center"),
+    document.querySelector("main").appendChild(e),
+    n &&
+      o.init().then(() => {
+        e.remove();
+      });
+});

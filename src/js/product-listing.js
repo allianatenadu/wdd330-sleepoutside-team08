@@ -22,7 +22,7 @@ async function displayProductList(category) {
   const listElement = document.querySelector(".product-list");
 
   listElement.innerHTML = ""; // Clear any existing content
-  products.forEach(product => {
+  products.forEach((product) => {
     const card = renderProductCard(product);
     listElement.appendChild(card);
   });
