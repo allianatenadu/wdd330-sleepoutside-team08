@@ -2,11 +2,20 @@ import { getParam } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
-const dataSource = new ProductData("tents");
+document.addEventListener("DOMContentLoaded", () => {
+  const productId = getParam("product");
+  const dataSource = new ProductData("tents");
+  const product = new ProductDetails(productId, dataSource);
 
-const productId = getParam("product");
-// console.log(dataSource.findProductById(productId));
+  // Display loading text only, don't replace the entire <main>
+  const loadingEl = document.createElement("p");
+  loadingEl.textContent = "⏳ Loading product...";
+  loadingEl.style.textAlign = "center";
+  document.querySelector("main").appendChild(loadingEl);
 
-const product = new ProductDetails(productId, dataSource);
-// console.log("product ID from URL:", productId);
-product.init();
+  if (productId) {
+    product.init().then(() => {
+      loadingEl.remove(); // Remove loading once product is rendered
+    });
+  }
+});

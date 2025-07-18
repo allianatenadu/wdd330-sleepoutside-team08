@@ -2,7 +2,10 @@
 ## WDD 330 - Web Frontend Development II
 
 ### ⛺ SleepOutside Starter Code
- - https://wdd330-sleepoutside-team08.netlify.app/
+- https://ephemeral-cupcake-2293a4.netlify.app/
+🔗 [View Team 08 Live Site](https://ephemeral-cupcake-2293a4.netlify.app)
+
+
 
  - This repository is the start of the SleepOutside web application project for WDD 330. The repository contains branches which are checkpoints for the team and individual assignments throughout the course.
 

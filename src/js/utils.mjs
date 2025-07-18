@@ -52,6 +52,7 @@ export function renderWithTemplate(templateFn, parentElement, data, callback) {
     callback(data);
   }
   
+  return urlParams.get(param); // uses the passed-in param!
 }
 
 async function loadTemplate(path) {
