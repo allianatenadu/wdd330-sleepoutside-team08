@@ -1,4 +1,4 @@
-import ProductData from "./ProductData.js";
+import ProductData from "./ProductData.mjs";
 import { getParam } from "./utils.mjs";
 
 function renderProductCard(product) {
@@ -16,8 +16,8 @@ function renderProductCard(product) {
   return card;
 }
 
-async function displayProductList(category) {
-  const dataSource = new ProductData(category);
+async function displayProductList(categoryName) {
+  const dataSource = new ProductData(categoryName);
   const products = await dataSource.getData();
   const listElement = document.querySelector(".product-list");
 
