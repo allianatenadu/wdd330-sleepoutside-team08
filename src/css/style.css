@@ -174,6 +174,68 @@ button {
   text-decoration: none;
   color: var(--dark-grey);
 }
+/* Add these styles to your existing CSS */
+
+/* Updated product-grid styles for horizontal layout */
+.product-grid {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.product-grid li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 120px;
+}
+
+.product-grid a {
+  text-decoration: none;
+  color: var(--dark-grey);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-grid svg {
+  margin-bottom: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.product-grid a:hover svg {
+  transform: scale(1.1);
+}
+
+.product-grid p {
+  margin: 0;
+  padding: 0.5rem 0;
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .product-grid {
+    gap: 1rem;
+  }
+  
+  .product-grid svg {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .product-grid {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
 
 /* Styles for product lists */
 .product-card {

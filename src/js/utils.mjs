@@ -37,8 +37,8 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
 }
 
 // render a single element with optional callback
-export function renderWithTemplate(templateFn, parentElement, data, callback) {
-  parentElement.innerHTML = templateFn;
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
   if (callback) {
     callback(data);
   }
