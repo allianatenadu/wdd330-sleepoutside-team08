@@ -1,10 +1,7 @@
-import { getLocalStorage } from "./utils.mjs";
+import { updateCartCount } from "./CartCount.mjs";
+import { loadHeaderFooter } from "./utils.mjs";
 
-function updateCartCount() {
-  const cart = getLocalStorage("so-cart") || [];
-  const count = cart.reduce((sum, item) => sum + (item.Quantity || 1), 0);
-  document.querySelector(".cart-count").textContent = count;
-}
+loadHeaderFooter();
 
 // Call this on load
 updateCartCount();

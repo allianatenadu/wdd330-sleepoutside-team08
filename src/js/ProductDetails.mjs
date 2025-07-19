@@ -1,4 +1,6 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, getDiscountInfo } from "./utils.mjs";
+
+
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -9,6 +11,7 @@ export default class ProductDetails {
 
   async init() {
     this.product = await this.dataSource.findProductById(this.productId);
+    // console.log("Product ID:", this.productId);
 
     if (!this.product) {
       document.querySelector("main").innerHTML = `
@@ -53,6 +56,23 @@ export default class ProductDetails {
       nameEl.textContent = this.product.NameWithoutBrand || this.product.Name || "Product Name";
     }
 
+    
+
+    // document.querySelector('#productPrice').textContent = this.product.FinalPrice;
+    const priceElement = document.querySelector('#productPrice');
+
+    if (isDiscounted) {
+      priceElement.innerHTML = `
+        <span class="final-price">$${this.product.FinalPrice.toFixed(2)}</span>
+        <span class="original-price">$${this.product.SuggestedRetailPrice.toFixed(2)}</span>
+      `;
+    } else {
+      priceElement.textContent = `$${this.product.FinalPrice.toFixed(2)}`;
+    }
+
+    
+    document.querySelector('#productColor').textContent = this.product.Colors[0].ColorName;
+    document.querySelector('#productDesc').innerHTML = this.product.DescriptionHtmlSimple;
     const imageEl = document.getElementById("productImage");
     if (imageEl) {
       imageEl.src = this.product.Image || "../images/default.jpg";
