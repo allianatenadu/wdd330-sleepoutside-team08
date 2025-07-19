@@ -1,5 +1,5 @@
-import { getParam, loadHeaderFooter } from './utils.mjs';
-import ProductData from './ProductData.mjs';
+import { getParam, loadHeaderFooter } from "./utils.mjs";
+import ProductData from "./ProductData.mjs";
 
 class ProductList {
   constructor(category, dataSource, listElement) {
@@ -14,8 +14,8 @@ class ProductList {
   }
 
   renderList(list) {
-    this.listElement.innerHTML = '';
-    const template = list.map(this.renderOneProduct).join('');
+    this.listElement.innerHTML = "";
+    const template = list.map(this.renderOneProduct).join("");
     this.listElement.innerHTML = template;
   }
 
@@ -33,10 +33,11 @@ class ProductList {
 }
 
 // Load the list
-const category = getParam('category');
-const dataSource = new ProductData();
-const listElement = document.querySelector('.product-list');
-const productList = new ProductList(category, dataSource, listElement);
+const categoryParam = getParam("category");
+const productDataSource = new ProductData();
+const productListElement = document.querySelector(".product-list");
+
+const productList = new ProductList(categoryParam, productDataSource, productListElement);
 
 productList.init();
 loadHeaderFooter();
