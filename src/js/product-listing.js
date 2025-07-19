@@ -1,43 +1,16 @@
 import { getParam, loadHeaderFooter } from "./utils.mjs";
+import ProductList from "./product-listing.mjs";
 import ProductData from "./ProductData.mjs";
 
-class ProductList {
-  constructor(category, dataSource, listElement) {
-    this.category = category;
-    this.dataSource = dataSource;
-    this.listElement = listElement;
-  }
+// Get the category from the URL
+const category = getParam("category") || "tents"; // Default to "tents" if none
 
-  async init() {
-    const list = await this.dataSource.getData(this.category);
-    this.renderList(list);
-  }
+// Select the list element
+const listElement = document.querySelector(".product-list");
 
-  renderList(list) {
-    this.listElement.innerHTML = "";
-    const template = list.map(this.renderOneProduct).join("");
-    this.listElement.innerHTML = template;
-  }
-
-  renderOneProduct(product) {
-    return `
-      <li class="product-card">
-        <a href="../product_pages/product.html?product=${product.Id}">
-          <img src="${product.Image}" alt="${product.Name}" />
-          <h2 class="card__brand">${product.Name}</h2>
-          <p class="product-card__price">$${Number(product.FinalPrice).toFixed(2)}</p>
-        </a>
-      </li>
-    `;
-  }
-}
-
-// Load the list
-const categoryParam = getParam("category");
-const productDataSource = new ProductData();
-const productListElement = document.querySelector(".product-list");
-
-const productList = new ProductList(categoryParam, productDataSource, productListElement);
-
+// Instantiate and initialize product list
+const dataSource = new ProductData(category);
+const productList = new ProductList(category, dataSource, listElement);
 productList.init();
+
 loadHeaderFooter();

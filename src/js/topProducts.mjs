@@ -2,8 +2,8 @@ import ProductData from "./ProductData.mjs";
 
 // Renders the Top Products section with discount indicators
 export async function renderTopProducts() {
-  const dataSource = new ProductData(); // ✅ Removed "tents" from constructor
-  const products = await dataSource.getData("tents"); // ✅ Pass "tents" directly here
+  const dataSource = new ProductData(); // Removed "tents" from constructor
+  const products = await dataSource.getData("tents"); // Pass "tents" directly here
   const topProductIds = ["880RR", "985RF", "985PR", "344YJ"];
   const topProducts = products.filter(p => topProductIds.includes(p.Id));
 
