@@ -57,15 +57,20 @@ async function loadTemplate(path) {
 }
 
 // load header and footer into the DOM
-export async function loadHeaderFooter() {
-  const headerTemplate = await loadTemplate("../partials/header.html");
-  const footerTemplate = await loadTemplate("../partials/footer.html");
+export function loadHeaderFooter() {
+  const headerPromise = fetch("/partials/header.html")
+    .then((response) => response.text())
+    .then((data) => {
+      document.querySelector("#main-header").innerHTML = data;
+    });
 
-  const headerElement = document.querySelector("#main-header");
-  const footerElement = document.querySelector("#main-footer");
+  const footerPromise = fetch("/partials/footer.html")
+    .then((response) => response.text())
+    .then((data) => {
+      document.querySelector("#main-footer").innerHTML = data;
+    });
 
-  renderWithTemplate(headerTemplate, headerElement);
-  renderWithTemplate(footerTemplate, footerElement);
+  return Promise.all([headerPromise, footerPromise]);
 }
 
 // calculate discount info for a product
