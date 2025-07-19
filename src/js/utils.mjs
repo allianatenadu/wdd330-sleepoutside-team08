@@ -27,3 +27,8 @@ export function getParam(param) {
   const urlParams = new URLSearchParams(queryString);
   return urlParams.get(param); // uses the passed-in param!
 }
+
+// convert fetch response to JSON
+export function convertToJson(response) {
+  return response.json();
+}

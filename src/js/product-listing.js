@@ -1,37 +1,42 @@
-import ProductData from "./ProductData.mjs";
-import { getParam } from "./utils.mjs";
+import { getParam, loadHeaderFooter } from './utils.mjs';
+import ProductData from './ProductData.mjs';
 
-function renderProductCard(product) {
-  const card = document.createElement("li");
-  card.classList.add("product-card");
+class ProductList {
+  constructor(category, dataSource, listElement) {
+    this.category = category;
+    this.dataSource = dataSource;
+    this.listElement = listElement;
+  }
 
-  card.innerHTML = `
-    <a href="../product_pages/product.html?product=${product.Id}">
-      <img src="${product.Image}" alt="${product.Name}" />
-      <h2 class="card__brand">${product.Name}</h2>
-      <p class="product-card__price">$${Number(product.FinalPrice).toFixed(2)}</p>
-    </a>
-  `;
+  async init() {
+    const list = await this.dataSource.getData(this.category);
+    this.renderList(list);
+  }
 
-  return card;
+  renderList(list) {
+    this.listElement.innerHTML = '';
+    const template = list.map(this.renderOneProduct).join('');
+    this.listElement.innerHTML = template;
+  }
+
+  renderOneProduct(product) {
+    return `
+      <li class="product-card">
+        <a href="../product_pages/product.html?product=${product.Id}">
+          <img src="${product.Image}" alt="${product.Name}" />
+          <h2 class="card__brand">${product.Name}</h2>
+          <p class="product-card__price">$${Number(product.FinalPrice).toFixed(2)}</p>
+        </a>
+      </li>
+    `;
+  }
 }
 
-async function displayProductList(categoryName) {
-  const dataSource = new ProductData(categoryName);
-  const products = await dataSource.getData();
-  const listElement = document.querySelector(".product-list");
+// Load the list
+const category = getParam('category');
+const dataSource = new ProductData();
+const listElement = document.querySelector('.product-list');
+const productList = new ProductList(category, dataSource, listElement);
 
-  listElement.innerHTML = ""; // Clear any existing content
-  products.forEach((product) => {
-    const card = renderProductCard(product);
-    listElement.appendChild(card);
-  });
-}
-
-// 1. Get category from the URL (e.g. ?category=tents)
-const category = getParam("category");
-
-// 2. Show product list if category is valid
-if (category) {
-  displayProductList(category);
-}
+productList.init();
+loadHeaderFooter();
